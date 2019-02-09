@@ -1,0 +1,51 @@
+<role rolename="manager-gui"/>
+<user username="admin" password="admin" roles="manager-gui"/>
+
+
+
+#installing tomcat9
+wget http://mirrors.estointernet.in/apache/tomcat/tomcat-9/v9.0.14/bin/apache-tomcat-9.0.14.zip
+unzip apache-tomcat-9.0.14.zip
+chmod -R 755 apache-tomcat-9.0.14
+vi apache-tomcat-9.0.14/conf/server.xml
+
+changing potno to 8080
+
+./bin/catalina.sh stop
+./bin/catalina.sh start
+
+#search for context.xml
+find / -name context.xml
+
+
+/root/apache-tomcat-9.0.14/conf/context.xml
+/root/apache-tomcat-9.0.14/webapps/host-manager/META-INF/context.xml
+/root/apache-tomcat-9.0.14/webapps/manager/META-INF/context.xml
+
+vi /root/apache-tomcat-9.0.14/webapps/host-manager/META-INF/context.xml
+vi /root/apache-tomcat-9.0.14/webapps/manager/META-INF/context.xml
+<!--  <Valve className="org.apache.catalina.valves.RemoteAddrValve"
+         allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" /> -->
+
+./bin/catalina.sh stop
+./bin/catalina.sh start
+
+
+vi conf/tomcat-user.xml file
+
+under Note2 copy below
+
+-->
+        <role rolename="manager-gui"/>
+        <role rolename="manager-script"/>
+        <role rolename="manager-jmx"/>
+        <role rolename="manager-status"/>
+        <user username="admin" password="admin" roles="manager-gui, manager-script, manager-jmx, manager-status"/>
+        <user username="deployer" password="deployer" roles="manager-script"/>
+        <user username="tomcat" password="s3cret" roles="manager-gui"/>
+
+
+
+setting up Java:
+
+http://bhargavamin.com/how-to-do/setting-up-java-environment-variable-on-ec2/
