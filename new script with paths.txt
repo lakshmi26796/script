@@ -1,0 +1,54 @@
+type java to see version if no java vversion 
+
+
+then:
+#install java
+i)yum -y install java-1.8*
+
+#find where java installed
+find /usr/lib/jvm/java-1.8* | head -n 3
+  /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.191.b12-1.el7_6.x86_64
+#update bash profile and update home path for java
+vi  .bash_proflie
+
+#update the home path for java below #
+JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.191.b12-1.el7_6.x86_64
+PATH=$PATH:$JAVA_HOME:$HOME/bin
+
+source ~/.bash_profile
+echo $JAVA_HOME
+
+#then install jenkins
+
+#After installing jenkins go to Global tool config in jenkins
+name: java-1.8
+copy echo $JAVA_HOME and copy in jenkins path and save it
+
+
+****************Maven installation*******************
+#create directory for maven
+mkdir /opt/maven 
+#go maven directory and install maven by following regular steps
+wget http://mirrors.estointernet.in/apache/maven/maven-3/3.6.0/binaries/apache-maven-3.6.0-bin.tar.gz
+tar -xvzf apache-maven-3.6.0-bin.tar.gz
+
+#setup path in bash profile
+Eg: /opt/maven/apache-maven-3.6.0
+M2_HOME=/opt/maven/apache-maven-3.6.0
+M2=$M2_HOME/bin
+PATH=$PATH:$JAVA_HOME:$M2_HOME:$M2:$HOME/bin
+
+#then refresh it : source ~/.bash_profile
+echo $PATH
+
+#in jenkins manage plugins
+install maven invoker and git without/with restart
+
+#Global tool config set maven path
+Maven
+#set path
+/opt/maven/apache
+
+
+***************Tomcat installation*****************
+Install tomcat by following regular steps under /opt
