@@ -1,0 +1,29 @@
+#! /bin/bash
+
+#update all
+yum update -y
+
+#install wget
+yum install wget -y
+
+#install httpd
+yum install httpd -y
+
+#install git
+yum install git -y
+
+#install java
+yum install java-1.8* -y
+
+#find where java installed
+find /usr/lib/jvm/java-1.8* | head -n 3
+  
+#update bash profile and update home path for java
+vi  .bash_profile
+JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.191.b12-1.el7_6.x86_64
+PATH=$PATH:$JAVA_HOME:$HOME/bin
+
+sed -i '9,12d' .bash_profile
+echo "JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.191.b12-1.el7_6.x86_64" >> .bash_profile
+echo "PATH=$PATH:$JAVA_HOME:$HOME/bin" >> .bash_profile
+echo "export PATH" >> .bash_profile
