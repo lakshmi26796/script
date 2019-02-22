@@ -19,11 +19,40 @@ yum install java-1.8* -y
 find /usr/lib/jvm/java-1.8* | head -n 3
   
 #update bash profile and update home path for java
-vi  .bash_profile
-JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.191.b12-1.el7_6.x86_64
-PATH=$PATH:$JAVA_HOME:$HOME/bin
-
 sed -i '9,12d' .bash_profile
 echo "JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.191.b12-1.el7_6.x86_64" >> .bash_profile
 echo "PATH=$PATH:$JAVA_HOME:$HOME/bin" >> .bash_profile
 echo "export PATH" >> .bash_profile
+
+#refreshing .bash_profile
+source ~/.bash_profile
+echo $JAVA_HOME
+
+#install jenkins
+wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+yum install jenkins -y
+systemctl start jenkins.service
+systemctl enable jenkins.service
+systemctl status jenkins.service
+
+#create directory for maven
+mkdir /opt/maven 
+
+#go maven directory and install maven by following regular steps
+cd /opt/maven
+wget http://mirrors.estointernet.in/apache/maven/maven-3/3.6.0/binaries/apache-maven-3.6.0-bin.tar.gz
+tar -xvzf apache-maven-3.6.0-bin.tar.gz
+cd
+
+#setup path in bash profile
+sed -i '9,12d' .bash_profile
+echo "JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.191.b12-1.el7_6.x86_64" >> .bash_profile
+echo "M2_HOME=/opt/maven/apache-maven-3.6.0" >> .bash_profile
+echo "M2=$M2_HOME/bin" >> .bash_profile
+echo "PATH=$PATH:$JAVA_HOME:$M2_HOME:$M2:$HOME/bin" >> .bash_profile
+echo "export PATH" >> .bash_profile
+
+#then refresh it : 
+source ~/.bash_profile
+echo $PATH
